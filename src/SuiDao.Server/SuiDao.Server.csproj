@@ -8,6 +8,7 @@
   <ItemGroup>
     <Compile Include="..\SuiDao.Client\HttpHelper.cs" Link="HttpHelper.cs" />
     <Compile Include="..\SuiDao.Client\Models\LogInByKeyMassage.cs" Link="Model\LogInByKeyMassage.cs" />
+    <Compile Include="..\SuiDao.Client\SuiDaoApi.cs" Link="SuiDaoApi.cs" />
   </ItemGroup>
 
   <ItemGroup>

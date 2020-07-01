@@ -47,7 +47,7 @@ namespace SuiDao.Server
             {
                 var conf = new ConfigurationBuilder()
                   .SetBasePath(Directory.GetCurrentDirectory())
-                  .AddJsonFile("appsettings.json", true, true)
+                  .AddJsonFile("appsettings.json", false, true)
                   .Build();
 
                 appsettings = conf.Get<Appsettings>();

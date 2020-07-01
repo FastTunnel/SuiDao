@@ -161,7 +161,7 @@ namespace SuiDao.Client
 
         private static void Run(IServiceProvider servicesProvider, ILogger _logger, string key, bool log)
         {
-            var res_str = HttpHelper.PostAsJson("https://api1.suidao.io/api/Client/GetServerByKey", $"{{ \"key\":\"{key}\"}}").Result;
+            var res_str = HttpHelper.PostAsJson(SuiDaoApi.GetServerListByKey, $"{{ \"key\":\"{key}\"}}").Result;
             var jobj = JObject.Parse(res_str);
             if ((bool)jobj["success"] == true)
             {

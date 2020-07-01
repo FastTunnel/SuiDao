@@ -17,7 +17,7 @@ namespace SuiDao.Server
         {
 
             var logMsg = content.ToObject<LogInByKeyMassage>();
-            var res = HttpHelper.PostAsJson("https://api1.suidao.io/api/Client/GetTunnelByKey", $"{{ \"key\":\"{logMsg.key}\",\"server_id\":{logMsg.server_id}}}").Result;
+            var res = HttpHelper.PostAsJson(SuiDaoApi.GetTunnelListByKeyAndServerId, $"{{ \"key\":\"{logMsg.key}\",\"server_id\":{logMsg.server_id}}}").Result;
 
             var jobj = JObject.Parse(res);
             if ((bool)jobj["success"] == true)

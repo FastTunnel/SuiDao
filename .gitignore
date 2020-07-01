@@ -5,3 +5,4 @@
 /src/SuiDao.Server/*.user
 /src/SuiDao.Client/*.user
 /src/.vs
+/publish

@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuiDao.Client", "SuiDao.Cli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuiDao.Server", "SuiDao.Server\SuiDao.Server.csproj", "{C9FF9B2C-C6EE-40E5-8B92-124BD3C4204B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cmd", "cmd", "{BED19D09-940B-4DD6-AAEC-8C95C1FB5F36}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\FastTunnel\publish.cmd = ..\..\FastTunnel\publish.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
