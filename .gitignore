@@ -1,0 +1,7 @@
+/src/SuiDao.Client/obj
+/src/SuiDao.Client/bin
+/src/SuiDao.Server/obj
+/src/SuiDao.Server/bin
+/src/SuiDao.Server/*.user
+/src/SuiDao.Client/*.user
+/src/.vs

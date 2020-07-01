@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FastTunnel.Core" Version="1.0.0" />
+    <PackageReference Include="NLog" Version="4.6.8" />
+  </ItemGroup>
+
+</Project>
