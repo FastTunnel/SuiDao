@@ -27,9 +27,6 @@ namespace SuiDao.Server
 
                     // DI
                     services.AddSingleton<FastTunnelServer>()
-                        .AddSingleton<LoginHandler>()
-                        .AddSingleton<SwapMsgHandler>()
-                        .AddSingleton<HeartHandler>()
                         .AddSingleton<IConfigHandler, SuiDaoConfigHandler>();
                 });
     }

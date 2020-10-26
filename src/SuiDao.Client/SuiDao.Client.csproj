@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FastTunnel.Core" Version="1.0.0" />
+    <PackageReference Include="FastTunnel.Core" Version="1.0.2" />
     <PackageReference Include="NLog" Version="4.6.8" />
   </ItemGroup>
 

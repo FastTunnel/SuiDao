@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FastTunnel.Core" Version="1.0.1" />
+    <PackageReference Include="FastTunnel.Core" Version="1.0.21" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.6.4" />
   </ItemGroup>
 

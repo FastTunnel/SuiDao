@@ -15,7 +15,6 @@ namespace SuiDao.Server
     {
         public LogInMassage GetConfig(JObject content)
         {
-
             var logMsg = content.ToObject<LogInByKeyMassage>();
             var res = HttpHelper.PostAsJson(SuiDaoApi.GetTunnelListByKeyAndServerId, $"{{ \"key\":\"{logMsg.key}\",\"server_id\":{logMsg.server_id}}}").Result;
 

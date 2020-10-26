@@ -1,4 +1,6 @@
 ﻿using FastTunnel.Core.Core;
+using FastTunnel.Core.Global;
+using FastTunnel.Core.Handlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -16,11 +18,12 @@ namespace SuiDao.Server
         IConfiguration _configuration;
         FastTunnelServer _fastTunnelServer;
 
-        public SuiDaoServer(ILogger<SuiDaoServer> logger, IConfiguration configuration, FastTunnelServer fastTunnelServer)
+        public SuiDaoServer(ILogger<SuiDaoServer> logger, IConfiguration configuration)
         {
             _logger = logger;
             _configuration = configuration;
-            _fastTunnelServer = fastTunnelServer;
+            _fastTunnelServer = new FastTunnelServer(_logger, _configuration.Get<Appsettings>().ServerSettings);
+            FastTunnelGlobal.AddCustomHandler<IConfigHandler, SuiDaoConfigHandler>(new SuiDaoConfigHandler());
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -43,7 +46,7 @@ namespace SuiDao.Server
 
         private void Run()
         {
-            _fastTunnelServer.Run(_configuration.Get<Appsettings>().ServerSettings);
+            _fastTunnelServer.Run();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
