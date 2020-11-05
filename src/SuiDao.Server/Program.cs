@@ -24,10 +24,6 @@ namespace SuiDao.Server
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<SuiDaoServer>();
-
-                    // DI
-                    services.AddSingleton<FastTunnelServer>()
-                        .AddSingleton<IConfigHandler, SuiDaoConfigHandler>();
                 });
     }
 }

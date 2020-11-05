@@ -250,7 +250,6 @@ namespace SuiDao.Client
             service.AddSingleton<FastTunnelClient>()
                  .AddSingleton<ClientHeartHandler>()
                  .AddSingleton<LogHandler>()
-                 .AddSingleton<NewCustomerHandler>()
                  .AddSingleton<NewSSHHandler>();
         }
 
