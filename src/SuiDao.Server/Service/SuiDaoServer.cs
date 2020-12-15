@@ -1,4 +1,4 @@
-﻿using FastTunnel.Core.Core;
+﻿using FastTunnel.Core.Client;
 using FastTunnel.Core.Global;
 using FastTunnel.Core.Handlers;
 using Microsoft.Extensions.Configuration;

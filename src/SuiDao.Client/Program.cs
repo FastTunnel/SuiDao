@@ -1,6 +1,6 @@
 ﻿using FastTunnel.Core;
+using FastTunnel.Core.Client;
 using FastTunnel.Core.Config;
-using FastTunnel.Core.Core;
 using FastTunnel.Core.Handlers.Client;
 using FastTunnel.Core.Host;
 using FastTunnel.Core.Logger;
@@ -250,6 +250,7 @@ namespace SuiDao.Client
             service.AddSingleton<FastTunnelClient>()
                  .AddSingleton<ClientHeartHandler>()
                  .AddSingleton<LogHandler>()
+                 .AddSingleton<HttpRequestHandler>()
                  .AddSingleton<NewSSHHandler>();
         }
 

@@ -1,5 +1,4 @@
-﻿using FastTunnel.Core.Core;
-using FastTunnel.Core.Exceptions;
+﻿using FastTunnel.Core.Exceptions;
 using FastTunnel.Core.Handlers;
 using FastTunnel.Core.Models;
 using Newtonsoft.Json.Linq;

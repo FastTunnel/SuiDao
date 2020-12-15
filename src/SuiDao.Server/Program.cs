@@ -1,10 +1,8 @@
-﻿using FastTunnel.Core.Core;
-using FastTunnel.Core.Handlers;
-using FastTunnel.Core.Handlers.Server;
-using FastTunnel.Core.Logger;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NLog.Extensions.Logging;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
+using System;
 
 namespace SuiDao.Server
 {
@@ -12,18 +10,35 @@ namespace SuiDao.Server
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception exception)
+            {
+                //NLog: catch setup errors
+                logger.Error(exception, "Stopped program because of exception");
+                throw;
+            }
+            finally
+            {
+                // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+                NLog.LogManager.Shutdown();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureLogging((context) =>
-                {
-                    context.AddNLog(NlogConfig.getNewConfig());
-                })
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<SuiDaoServer>();
-                });
+                })
+                .ConfigureLogging((HostBuilderContext context, ILoggingBuilder logging) =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(LogLevel.Trace);
+                })
+                .UseNLog();
     }
 }
