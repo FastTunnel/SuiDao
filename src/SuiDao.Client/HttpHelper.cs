@@ -17,6 +17,7 @@ namespace SuiDao.Client
                 httpclient.BaseAddress = new Uri(uri);
                 var content = new StringContent(strContent, Encoding.UTF8, "application/json");
 
+                // api1.suidao.io
                 var response = httpclient.PostAsync(uri, content).Result;
                 if (response.StatusCode == HttpStatusCode.OK)
                 {

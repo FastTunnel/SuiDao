@@ -27,6 +27,9 @@ namespace SuiDao.Client
 
         /// <summary>
         /// suidao.io 客户端
+        /// 参数规范定义 [指令 参数]
+        /// 指令
+        /// login [AccessKey]
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
@@ -35,6 +38,37 @@ namespace SuiDao.Client
             var logger = LogManager.GetCurrentClassLogger();
             logger.Info("===== SuiDao Client Start =====");
 
+            if (args.Length == 0)
+            {
+                defaultLogic(logger);
+                return;
+            }
+
+            switch (args[0])
+            {
+                case "login":
+                    loginByKey(logger, args);
+                    break;
+                default:
+                    Console.WriteLine($"{args[0]} 指令不存在");
+                    break;
+            }
+        }
+
+        private static void loginByKey(Logger logger, string[] args)
+        {
+            if (args.Length < 2)
+            {
+                Console.WriteLine($"参数不全");
+                return;
+            }
+
+            var key = args[1];
+            LogByKey(key, logger, false);
+        }
+
+        public static void defaultLogic(ILogger logger)
+        {
             var keyFile = Path.Combine(AppContext.BaseDirectory, KeyLogName);
             if (!File.Exists(keyFile))
             {
@@ -130,9 +164,15 @@ namespace SuiDao.Client
 
         static IServiceProvider servicesProvider;
 
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="logger"></param>
+        /// <param name="log">是否记录登录记录</param>
         private static void LogByKey(string key, ILogger logger, bool log)
         {
-            Console.WriteLine("登录中...");
+            Console.WriteLine($"AccessKey={key} \n登录中...");
 
             try
             {
