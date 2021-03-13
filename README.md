@@ -15,8 +15,9 @@
 ## SuiDao.Client设置自启&自动登录
 
 各个操作系统如何实习开机自启某个程序不做介绍  
-启动程序时传参如下，可实现程序启动时自动使用执行的accesskey进行登录
-`SuiDao.Client login accesskey`
+启动程序时传参如下，可实现程序启动时自动使用执行的accesskey进行登录  
+
+`SuiDao.Client login accesskey`  
 
 accesskey替换你自己的key
 
