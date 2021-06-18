@@ -13,3 +13,4 @@
 /src/SuiDao.Client/Properties/PublishProfiles/FolderProfile.pubxml
 /src/SuiDao.Client/Properties/PublishProfiles/FolderProfile.pubxml.user
 /src/SuiDao.Server/Properties/PublishProfiles/*.user
+/src/SuiDao.Server/Properties/PublishProfiles

@@ -43,7 +43,10 @@ namespace SuiDao.Server
                 {
                     logging.ClearProviders();
                     logging.SetMinimumLevel(LogLevel.Trace);
-                })
-                .UseNLog();
+                    //ILoggingBuilder.AddFilter("System", LogLevel.Warning);
+                    //ILoggingBuilder.AddFilter("Microsoft", LogLevel.Warning);
+                    //ILoggingBuilder.AddLog4Net();
+                });
+                //.UseNLog();
     }
 }
