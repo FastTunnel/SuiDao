@@ -11,4 +11,5 @@ namespace SuiDao.Client.Models
 
         public long server_id { get; set; }
     }
+
 }

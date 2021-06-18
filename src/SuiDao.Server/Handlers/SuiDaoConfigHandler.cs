@@ -4,6 +4,7 @@ using FastTunnel.Core.Models;
 using Newtonsoft.Json.Linq;
 using SuiDao.Client;
 using SuiDao.Client.Models;
+using SuiDao.Core;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -42,7 +43,6 @@ namespace SuiDao.Server
                             LocalIp = tunnel.local_ip,
                             LocalPort = tunnel.local_port,
                             RemotePort = tunnel.remote_port,
-                            Protocol = Protocol.TCP
                         });
                     }
                 }

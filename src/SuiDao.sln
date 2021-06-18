@@ -7,10 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuiDao.Client", "SuiDao.Cli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuiDao.Server", "SuiDao.Server\SuiDao.Server.csproj", "{C9FF9B2C-C6EE-40E5-8B92-124BD3C4204B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cmd", "cmd", "{BED19D09-940B-4DD6-AAEC-8C95C1FB5F36}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\FastTunnel\publish.cmd = ..\..\FastTunnel\publish.cmd
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuiDao.Core", "SuiDao.Core\SuiDao.Core.csproj", "{791A04D6-409E-4E19-AE36-DCE056BEB9F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +43,18 @@ Global
 		{C9FF9B2C-C6EE-40E5-8B92-124BD3C4204B}.Release|x64.Build.0 = Release|Any CPU
 		{C9FF9B2C-C6EE-40E5-8B92-124BD3C4204B}.Release|x86.ActiveCfg = Release|Any CPU
 		{C9FF9B2C-C6EE-40E5-8B92-124BD3C4204B}.Release|x86.Build.0 = Release|Any CPU
+		{791A04D6-409E-4E19-AE36-DCE056BEB9F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791A04D6-409E-4E19-AE36-DCE056BEB9F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791A04D6-409E-4E19-AE36-DCE056BEB9F9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{791A04D6-409E-4E19-AE36-DCE056BEB9F9}.Debug|x64.Build.0 = Debug|Any CPU
+		{791A04D6-409E-4E19-AE36-DCE056BEB9F9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{791A04D6-409E-4E19-AE36-DCE056BEB9F9}.Debug|x86.Build.0 = Debug|Any CPU
+		{791A04D6-409E-4E19-AE36-DCE056BEB9F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791A04D6-409E-4E19-AE36-DCE056BEB9F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{791A04D6-409E-4E19-AE36-DCE056BEB9F9}.Release|x64.ActiveCfg = Release|Any CPU
+		{791A04D6-409E-4E19-AE36-DCE056BEB9F9}.Release|x64.Build.0 = Release|Any CPU
+		{791A04D6-409E-4E19-AE36-DCE056BEB9F9}.Release|x86.ActiveCfg = Release|Any CPU
+		{791A04D6-409E-4E19-AE36-DCE056BEB9F9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

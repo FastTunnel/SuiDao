@@ -6,3 +6,10 @@
 /src/SuiDao.Client/*.user
 /src/.vs
 /publish
+/src/SuiDao.Core/obj
+/src/SuiDao.Core/bin
+/src/SuiDao.Server/.config
+/package-lock.json
+/src/SuiDao.Client/Properties/PublishProfiles/FolderProfile.pubxml
+/src/SuiDao.Client/Properties/PublishProfiles/FolderProfile.pubxml.user
+/src/SuiDao.Server/Properties/PublishProfiles/*.user

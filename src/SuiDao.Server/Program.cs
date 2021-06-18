@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FastTunnel.Core.Extensions;
+using FastTunnel.Core.Global;
+using FastTunnel.Core.Handlers;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
@@ -32,7 +34,10 @@ namespace SuiDao.Server
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<SuiDaoServer>();
+                    // -------------------FastTunnel START------------------
+                    services.AddFastTunnelServer();
+                    // -------------------FastTunnel EDN--------------------
+                    FastTunnelGlobal.AddCustomHandler<IConfigHandler, SuiDaoConfigHandler>(new SuiDaoConfigHandler());
                 })
                 .ConfigureLogging((HostBuilderContext context, ILoggingBuilder logging) =>
                 {
