@@ -25,7 +25,7 @@ namespace SuiDao.Server
                 })
                 .ConfigureLogging((HostBuilderContext context, ILoggingBuilder logging) =>
                 {
-                    //logging.ClearProviders();
+                    logging.ClearProviders();
                     //logging.SetMinimumLevel(LogLevel.Trace);
 
                     logging.AddLog4Net();
