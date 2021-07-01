@@ -23,6 +23,9 @@ jobs:
       - name: Set up projects for analysis
         uses: security-code-scan/security-code-scan-add-action@main
         
+      - name: cd
+        run: cd src
+        
       - name: Restore dependencies	
         run: dotnet restore
 
