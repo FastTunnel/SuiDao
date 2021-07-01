@@ -29,12 +29,13 @@ jobs:
         run: ls
         
       - name: cd
-        run: cd src
+        run: cd /d /src
         
       - name: pwd
         run: pwd
       - name: ls
         run: ls
+        
       - name: Restore dependencies	
         run: dotnet restore
 
