@@ -1,0 +1,12 @@
+﻿2021-06-18 23:05:22,728 INFO [4] FastTunnel.Core.Client.FastTunnelServer - (null) - ===== FastTunnel Server Starting =====
+2021-06-18 23:05:22,780 INFO [4] FastTunnel.Core.Client.FastTunnelServer - (null) - 监听客户端 -> 0.0.0.0:2271
+2021-06-18 23:05:22,786 INFO [4] FastTunnel.Core.Client.FastTunnelServer - (null) - 监听客户端 -> 0.0.0.0:2270
+2021-06-18 23:05:31,032 INFO [9] FastTunnel.Core.Client.FastTunnelServer - (null) - ===== FastTunnel Server Stoping =====
+2021-06-18 23:05:42,470 INFO [4] FastTunnel.Core.Client.FastTunnelServer - (null) - ===== FastTunnel Server Starting =====
+2021-06-18 23:05:42,545 INFO [4] FastTunnel.Core.Client.FastTunnelServer - (null) - 监听客户端 -> 0.0.0.0:2271
+2021-06-18 23:05:42,548 INFO [4] FastTunnel.Core.Client.FastTunnelServer - (null) - 监听客户端 -> 0.0.0.0:2270
+2021-06-18 23:05:55,280 INFO [6] FastTunnel.Core.Client.FastTunnelServer - (null) - ===== FastTunnel Server Stoping =====
+2021-06-18 23:05:58,205 INFO [4] FastTunnel.Core.Client.FastTunnelServer - (null) - ===== FastTunnel Server Starting =====
+2021-06-18 23:05:58,288 INFO [4] FastTunnel.Core.Client.FastTunnelServer - (null) - 监听客户端 -> 0.0.0.0:2271
+2021-06-18 23:05:58,291 INFO [4] FastTunnel.Core.Client.FastTunnelServer - (null) - 监听客户端 -> 0.0.0.0:2270
+2021-06-18 23:06:05,943 INFO [6] FastTunnel.Core.Client.FastTunnelServer - (null) - ===== FastTunnel Server Stoping =====
