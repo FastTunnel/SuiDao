@@ -1,10 +1,10 @@
 ## SuiDao.io
-基于[FastTunnel](https://github.com/SpringHgui/FastTunnel)二次开发的内网穿透服务
+本项目基于[FastTunnel](https://github.com/SpringHgui/FastTunnel)二次开发的内网穿透服务，是 https://suidao.io 网站的客户端及服务端源码，完整的suidao.io还包含一个api项目，尚未开源。
 
-***
-官网: [https://suidao.io](https://suidao.io)
+学习及自搭建穿透服务请移步至[FastTunnel](https://github.com/SpringHgui/FastTunnel)
 
-***
+想要二次开发打造自己的产品可以参考本项目，二次开发遇到困难请加交流群。
+
 ## 免费使用步骤
 
 - 登录官网[https://suidao.io](https://suidao.io)注册账号
