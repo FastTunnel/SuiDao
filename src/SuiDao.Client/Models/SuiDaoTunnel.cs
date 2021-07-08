@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Sockets;
 using FastTunnel.Core.Models;
+using FastTunnel.Core.Sockets;
+using FastTunnel.Core.Config;
 
 namespace SuiDao.Client.Models
 {
@@ -20,13 +22,13 @@ namespace SuiDao.Client.Models
         {
             LoginParam loginParam = new SuiDaoLoginData().defaultLogic();
 
-            Connecter _client = null;
+            DnsSocket _client = null;
 
             Server = new SuiDaoServer { ServerAddr = loginParam.server.ip, ServerPort = loginParam.server.bind_port };
 
             try
             {
-                _client = new Connecter(Server.ServerAddr, Server.ServerPort);
+                _client = new DnsSocket(loginParam.server.ip, loginParam.server.bind_port);
                 _client.Connect();
             }
             catch (Exception ex)
