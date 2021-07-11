@@ -23,7 +23,7 @@ namespace SuiDao.Client
                     services.AddFastTunnelClient();
                     // -------------------FastTunnel EDN--------------------
 
-                    // -------------------自定义实现覆盖--------------------
+                    // -------------------自定义实现覆盖----------------------
                     services.AddSingleton<FastTunnelClient, SuiDaoTunnel>();
                     // -----------------------------------------------------
                 })

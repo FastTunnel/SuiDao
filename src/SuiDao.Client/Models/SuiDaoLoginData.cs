@@ -1,4 +1,5 @@
 ﻿using FastTunnel.Core.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using SuiDao.Core;
@@ -15,30 +16,36 @@ namespace SuiDao.Client.Models
     public class SuiDaoLoginData
     {
         const string KeyLogName = ".key";
+        private IConfiguration configuration;
 
-        public object GetCustomLoginData()
+        /// <summary>
+        /// 上次选择的key，默认第一个key
+        /// </summary>
+        string lastKeyInput = "1";
+
+        /// <summary>
+        /// 上次选择的服务器序号
+        /// </summary>
+        string lastIndexInput = "0";
+
+        public SuiDaoLoginData(IConfiguration configuration)
         {
-            //if (args.Length == 0)
-            //{
-            //    defaultLogic(logger);
-            //    return;
-            //}
+            this.configuration = configuration;
+        }
+
+        public LoginParam GetLoginData()
+        {
+            // 控制台传参直接登录
+            if (configuration["key"] != null)
+            {
+                return LogByKey(configuration["key"], true);
+            }
 
             return defaultLogic();
-
-            //switch (args[0])
-            //{
-            //    case "login":
-            //        loginByKey(logger, args);
-            //        break;
-            //    default:
-            //        Console.WriteLine($"{args[0]} 指令不存在");
-            //        break;
-            //}
         }
 
 
-        public LoginParam defaultLogic()
+        private LoginParam defaultLogic()
         {
             var keyFile = Path.Combine(AppContext.BaseDirectory, KeyLogName);
             if (!File.Exists(keyFile))
@@ -62,6 +69,7 @@ namespace SuiDao.Client.Models
             keys = keys.Distinct().ToList();
             if (keys.Count > 0)
             {
+
                 Console.WriteLine("请选择要启动的客户端：" + Environment.NewLine);
 
                 Console.WriteLine($" 0：其他密钥登录");
@@ -70,24 +78,10 @@ namespace SuiDao.Client.Models
                     Console.WriteLine($" {i + 1}：{keys[i]}");
                 }
 
-                Console.WriteLine(Environment.NewLine + "输入编号回车键继续：");
-
                 return HandleNum(keys);
             }
 
             return NewKey();
-        }
-
-        private void loginByKey(string[] args)
-        {
-            if (args.Length < 2)
-            {
-                Console.WriteLine($"参数不全");
-                return;
-            }
-
-            var key = args[1];
-            LogByKey(key, false);
         }
 
         private LoginParam NewKey()
@@ -146,33 +140,42 @@ namespace SuiDao.Client.Models
                     }
                     else
                     {
-                        Console.WriteLine("请选择其中一个服务器进行连接（输入序号，回车键确认）：");
+                        string input = lastIndexInput;
+                        Console.WriteLine($"请选择其中一个服务器进行连接（输入序号，回车键确认）：5秒后将自动选择 {res.servers[int.Parse(lastIndexInput)].server_name}");
+
                         for (int i = 0; i < res.servers.Length; i++)
-                        {
                             Console.WriteLine($"{i}:{res.servers[i].server_name}");
-                        }
 
                         while (true)
                         {
-                            var input = Console.ReadLine();
+                            Task.Factory.StartNew(() =>
+                            {
+                                input = Console.ReadLine();
+                            }).Wait(5 * 1000);
+
+                            if (string.IsNullOrEmpty(input))
+                                input = "0";
+
                             int index;
                             if (int.TryParse(input, out index) && index <= res.servers.Length - 1 && index >= 0)
                             {
                                 // 输入有效，退出循环
                                 server = res.servers[index];
+                                lastIndexInput = input;
                                 Console.WriteLine($"您选择的服务器为：{server.server_name}");
                                 break;
                             }
                             else
                             {
                                 Console.WriteLine("输入有误，请重新输入");
+                                continue;
                             }
                         }
                     }
                 }
                 else
                 {
-                    Console.WriteLine("您无可用的服务器");
+                    Console.WriteLine("当前服务器无可用隧道，请添加新的隧道或服务器。");
                     return NewKey();
                 }
 
@@ -187,16 +190,22 @@ namespace SuiDao.Client.Models
 
         private LoginParam HandleNum(List<string> keys)
         {
+            Console.WriteLine($"{Environment.NewLine}输入编号回车键继续：5秒后将自动选择序号{lastKeyInput}");
             while (true)
             {
-                var str = Console.ReadLine();
-                if (string.IsNullOrEmpty(str))
+                string input = lastKeyInput;
+                Task.Factory.StartNew(() =>
+                {
+                    input = Console.ReadLine();
+                }).Wait(5 * 1000);
+
+                if (string.IsNullOrEmpty(input))
                 {
                     continue;
                 }
 
                 int index;
-                if (!int.TryParse(str, out index))
+                if (!int.TryParse(input, out index))
                 {
                     Console.WriteLine("输入错误 请重新选择");
                     continue;
@@ -218,7 +227,6 @@ namespace SuiDao.Client.Models
                 }
             }
         }
-
 
         /// <summary>
         /// 登录

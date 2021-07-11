@@ -13,15 +13,20 @@ namespace SuiDao.Client.Models
 {
     public class SuiDaoTunnel : FastTunnelClient
     {
+        SuiDaoLoginData suiDaoLoginData;
         public SuiDaoTunnel(ILogger<FastTunnelClient> logger, HttpRequestHandler newCustomerHandler, NewSSHHandler newSSHHandler, LogHandler logHandler, IConfiguration configuration, ClientHeartHandler clientHeartHandler)
             : base(logger, newCustomerHandler, newSSHHandler, logHandler, configuration, clientHeartHandler)
         {
+            this.suiDaoLoginData = new SuiDaoLoginData(_configuration);
         }
 
+        /// <summary>
+        /// 重写自己的登录逻辑
+        /// </summary>
+        /// <returns>成功登录后的Sokcet对象</returns>
         protected override Socket login()
         {
-            LoginParam loginParam = new SuiDaoLoginData().defaultLogic();
-
+            LoginParam loginParam = suiDaoLoginData.GetLoginData();
             DnsSocket _client = null;
 
             Server = new SuiDaoServer { ServerAddr = loginParam.server.ip, ServerPort = loginParam.server.bind_port };
