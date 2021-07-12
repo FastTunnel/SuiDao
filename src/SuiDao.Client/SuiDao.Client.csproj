@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="5.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="5.0.3" />
   </ItemGroup>
@@ -30,6 +31,18 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\FastTunnel\FastTunnel.Core\FastTunnel.Core.csproj" />
     <ProjectReference Include="..\SuiDao.Core\SuiDao.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update=".key">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="卸载服务.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="安装服务.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
