@@ -9,7 +9,7 @@ for project in ${projects[*]}; do
     for plate in ${plates[*]}; do
         echo "plate=${plate}"
         echo src/$project/$project.csproj
-        dotnet publish src/$project/$project.csproj -o=publish/$project.$plate -c=release -r=$plate -p:PublishSingleFile=true -p:PublishTrimmed=true --nologo
+        dotnet publish src/$project/$project.csproj -o=publish/$project.$plate -c=release -r=$plate -p:PublishSingleFile=true # -p:PublishTrimmed=true --nologo
         # cp src/$project/appsettings.json publish/$project.$plate
         echo
         echo "=========开始打包 ========="
