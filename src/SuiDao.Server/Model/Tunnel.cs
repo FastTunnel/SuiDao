@@ -8,11 +8,6 @@ namespace SuiDao.Server
     {
         public int app_type { get; set; }
 
-        /// <summary>
-        /// 用户别名
-        /// </summary>
-        public string name { get; set; }
-
         public string sub_domain { get; set; }
 
         public string local_ip { get; set; }

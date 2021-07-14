@@ -21,12 +21,14 @@ namespace SuiDao.Server
                     // -------------------FastTunnel START------------------
                     services.AddFastTunnelServer();
                     // -------------------FastTunnel EDN--------------------
+
+                    // ---------------------覆盖原有实现----------------------
                     FastTunnelGlobal.AddCustomHandler<IConfigHandler, SuiDaoConfigHandler>(new SuiDaoConfigHandler());
+                    // ---------------------覆盖原有实现----------------------
                 })
                 .ConfigureLogging((HostBuilderContext context, ILoggingBuilder logging) =>
                 {
                     logging.ClearProviders();
-                    //logging.SetMinimumLevel(LogLevel.Trace);
 
                     logging.AddLog4Net();
                     logging.SetMinimumLevel(LogLevel.Debug);
