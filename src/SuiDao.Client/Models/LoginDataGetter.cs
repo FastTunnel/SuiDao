@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SuiDao.Client.Models
 {
-    public class SuiDaoLoginData
+    public class LoginDataGetter
     {
         const string KeyLogName = ".key";
         private IConfiguration configuration;
@@ -28,7 +28,7 @@ namespace SuiDao.Client.Models
         /// </summary>
         string lastIndexInput = "0";
 
-        public SuiDaoLoginData(IConfiguration configuration)
+        public LoginDataGetter(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
@@ -69,9 +69,7 @@ namespace SuiDao.Client.Models
             keys = keys.Distinct().ToList();
             if (keys.Count > 0)
             {
-
-                Console.WriteLine("请选择要启动的客户端：" + Environment.NewLine);
-
+                Console.WriteLine("请选择要启动的客户端使用的Key：" + Environment.NewLine);
                 Console.WriteLine($" 0：其他密钥登录");
                 for (int i = 0; i < keys.Count; i++)
                 {
@@ -117,8 +115,55 @@ namespace SuiDao.Client.Models
             }
         }
 
-        private LoginParam Run(string key, bool log)
+        private LoginParam HandleNum(List<string> keys)
         {
+            Console.WriteLine($"{Environment.NewLine}输入编号回车键继续：5秒后将自动选择序号{lastKeyInput}");
+            while (true)
+            {
+                string input = lastKeyInput;
+                Task.Factory.StartNew(() =>
+                {
+                    input = Console.ReadLine();
+                }).Wait(5 * 1000);
+
+                if (string.IsNullOrEmpty(input))
+                {
+                    continue;
+                }
+
+                int index;
+                if (!int.TryParse(input, out index))
+                {
+                    Console.WriteLine("输入错误 请重新选择");
+                    continue;
+                }
+
+                if (index < 0 || index > keys.Count)
+                {
+                    Console.WriteLine("输入错误 请重新选择");
+                    continue;
+                }
+
+                if (index == 0)
+                {
+                    return NewKey();
+                }
+                else
+                {
+                    return LogByKey(keys[index - 1], false);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="logger"></param>
+        /// <param name="log">是否记录登录记录</param>
+        private LoginParam LogByKey(string key, bool log)
+        {
+            Console.WriteLine($"AccessKey={key} \n登录中...");
             var res_str = HttpHelper.PostAsJson(SuiDaoApi.GetServerListByKey, $"{{ \"key\":\"{key}\"}}").Result;
             var jobj = JObject.Parse(res_str);
             if ((bool)jobj["success"] == true)
@@ -186,58 +231,6 @@ namespace SuiDao.Client.Models
                 Console.WriteLine(jobj["errorMsg"].ToString());
                 return NewKey();
             }
-        }
-
-        private LoginParam HandleNum(List<string> keys)
-        {
-            Console.WriteLine($"{Environment.NewLine}输入编号回车键继续：5秒后将自动选择序号{lastKeyInput}");
-            while (true)
-            {
-                string input = lastKeyInput;
-                Task.Factory.StartNew(() =>
-                {
-                    input = Console.ReadLine();
-                }).Wait(5 * 1000);
-
-                if (string.IsNullOrEmpty(input))
-                {
-                    continue;
-                }
-
-                int index;
-                if (!int.TryParse(input, out index))
-                {
-                    Console.WriteLine("输入错误 请重新选择");
-                    continue;
-                }
-
-                if (index < 0 || index > keys.Count)
-                {
-                    Console.WriteLine("输入错误 请重新选择");
-                    continue;
-                }
-
-                if (index == 0)
-                {
-                    return NewKey();
-                }
-                else
-                {
-                    return LogByKey(keys[index - 1], false);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 登录
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="logger"></param>
-        /// <param name="log">是否记录登录记录</param>
-        private LoginParam LogByKey(string key, bool log)
-        {
-            Console.WriteLine($"AccessKey={key} \n登录中...");
-            return Run(key, log);
         }
     }
 }

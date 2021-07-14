@@ -11,13 +11,14 @@ using FastTunnel.Core.Config;
 
 namespace SuiDao.Client.Models
 {
-    public class SuiDaoTunnel : FastTunnelClient
+    public class SuiDaoClient : FastTunnelClient
     {
-        SuiDaoLoginData suiDaoLoginData;
-        public SuiDaoTunnel(ILogger<FastTunnelClient> logger, HttpRequestHandler newCustomerHandler, NewSSHHandler newSSHHandler, LogHandler logHandler, IConfiguration configuration, ClientHeartHandler clientHeartHandler)
+        LoginDataGetter _loginDataGetter;
+
+        public SuiDaoClient(ILogger<FastTunnelClient> logger, HttpRequestHandler newCustomerHandler, NewSSHHandler newSSHHandler, LogHandler logHandler, IConfiguration configuration, ClientHeartHandler clientHeartHandler, LoginDataGetter suiDaoLoginData)
             : base(logger, newCustomerHandler, newSSHHandler, logHandler, configuration, clientHeartHandler)
         {
-            this.suiDaoLoginData = new SuiDaoLoginData(_configuration);
+            this._loginDataGetter = suiDaoLoginData;
         }
 
         /// <summary>
@@ -26,7 +27,7 @@ namespace SuiDao.Client.Models
         /// <returns>成功登录后的Sokcet对象</returns>
         protected override Socket login()
         {
-            LoginParam loginParam = suiDaoLoginData.GetLoginData();
+            LoginParam loginParam = _loginDataGetter.GetLoginData();
             DnsSocket _client = null;
 
             Server = new SuiDaoServer { ServerAddr = loginParam.server.ip, ServerPort = loginParam.server.bind_port };
