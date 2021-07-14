@@ -27,6 +27,7 @@ namespace SuiDao.Client.Models
         /// <returns>成功登录后的Sokcet对象</returns>
         protected override Socket login()
         {
+            _logger.LogDebug($"登录开始");
             LoginParam loginParam = _loginDataGetter.GetLoginData();
             DnsSocket _client = null;
 
@@ -34,6 +35,7 @@ namespace SuiDao.Client.Models
 
             try
             {
+                _logger.LogDebug($"开始建立连接");
                 _client = new DnsSocket(loginParam.server.ip, loginParam.server.bind_port);
                 _client.Connect();
             }

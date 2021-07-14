@@ -15,6 +15,14 @@ namespace SuiDao.Client.Models
 {
     public class LoginDataGetter
     {
+        ILogger<LoginDataGetter> _logger;
+
+        public LoginDataGetter(ILogger<LoginDataGetter> logger, IConfiguration configuration)
+        {
+            this.configuration = configuration;
+            _logger = logger;
+        }
+
         const string KeyLogName = ".key";
         private IConfiguration configuration;
 
@@ -27,26 +35,23 @@ namespace SuiDao.Client.Models
         /// 上次选择的服务器序号
         /// </summary>
         string lastIndexInput = "0";
-
-        public LoginDataGetter(IConfiguration configuration)
-        {
-            this.configuration = configuration;
-        }
+        int sec = 10;
 
         public LoginParam GetLoginData()
         {
             // 控制台传参直接登录
             if (configuration["key"] != null)
             {
+                _logger.LogDebug($"传参快速登录 key={configuration["key"]}");
                 return LogByKey(configuration["key"], true);
             }
 
             return defaultLogic();
         }
 
-
         private LoginParam defaultLogic()
         {
+            _logger.LogDebug($"默认方式登录开始");
             var keyFile = Path.Combine(AppContext.BaseDirectory, KeyLogName);
             if (!File.Exists(keyFile))
             {
@@ -69,11 +74,11 @@ namespace SuiDao.Client.Models
             keys = keys.Distinct().ToList();
             if (keys.Count > 0)
             {
-                Console.WriteLine("请选择要启动的客户端使用的Key：" + Environment.NewLine);
-                Console.WriteLine($" 0：其他密钥登录");
+                _logger.LogInformation("请选择要启动的客户端使用的Key：");
+                _logger.LogInformation($"0：其他密钥登录");
                 for (int i = 0; i < keys.Count; i++)
                 {
-                    Console.WriteLine($" {i + 1}：{keys[i]}");
+                    _logger.LogInformation($"{i + 1}：{keys[i]}");
                 }
 
                 return HandleNum(keys);
@@ -87,7 +92,7 @@ namespace SuiDao.Client.Models
             string key;
             while (true)
             {
-                Console.Write("请输入登录密钥：");
+                _logger.LogInformation("请输入登录密钥：");
                 key = Console.ReadLine();
 
                 if (string.IsNullOrEmpty(key))
@@ -117,14 +122,14 @@ namespace SuiDao.Client.Models
 
         private LoginParam HandleNum(List<string> keys)
         {
-            Console.WriteLine($"{Environment.NewLine}输入编号回车键继续：5秒后将自动选择序号{lastKeyInput}");
+            _logger.LogInformation($"输入编号回车键继续：{sec}秒后将自动选择序号{lastKeyInput}");
             while (true)
             {
                 string input = lastKeyInput;
                 Task.Factory.StartNew(() =>
                 {
                     input = Console.ReadLine();
-                }).Wait(5 * 1000);
+                }).Wait(sec * 1000);
 
                 if (string.IsNullOrEmpty(input))
                 {
@@ -134,13 +139,13 @@ namespace SuiDao.Client.Models
                 int index;
                 if (!int.TryParse(input, out index))
                 {
-                    Console.WriteLine("输入错误 请重新选择");
+                    _logger.LogInformation("输入错误 请重新选择");
                     continue;
                 }
 
                 if (index < 0 || index > keys.Count)
                 {
-                    Console.WriteLine("输入错误 请重新选择");
+                    _logger.LogInformation("输入错误 请重新选择");
                     continue;
                 }
 
@@ -163,7 +168,7 @@ namespace SuiDao.Client.Models
         /// <param name="log">是否记录登录记录</param>
         private LoginParam LogByKey(string key, bool log)
         {
-            Console.WriteLine($"AccessKey={key} \n登录中...");
+            _logger.LogInformation($"正在使用Key={key}登录");
             var res_str = HttpHelper.PostAsJson(SuiDaoApi.GetServerListByKey, $"{{ \"key\":\"{key}\"}}").Result;
             var jobj = JObject.Parse(res_str);
             if ((bool)jobj["success"] == true)
@@ -186,17 +191,17 @@ namespace SuiDao.Client.Models
                     else
                     {
                         string input = lastIndexInput;
-                        Console.WriteLine($"请选择其中一个服务器进行连接（输入序号，回车键确认）：5秒后将自动选择 {res.servers[int.Parse(lastIndexInput)].server_name}");
+                        _logger.LogInformation($"请选择其中一个服务器进行连接（输入序号，回车键确认）：{sec}秒后将自动选择 {res.servers[int.Parse(lastIndexInput)].server_name}");
 
                         for (int i = 0; i < res.servers.Length; i++)
-                            Console.WriteLine($"{i}:{res.servers[i].server_name}");
+                            _logger.LogInformation($"{i}:{res.servers[i].server_name}");
 
                         while (true)
                         {
                             Task.Factory.StartNew(() =>
                             {
                                 input = Console.ReadLine();
-                            }).Wait(5 * 1000);
+                            }).Wait(sec * 1000);
 
                             if (string.IsNullOrEmpty(input))
                                 input = "0";
@@ -207,12 +212,12 @@ namespace SuiDao.Client.Models
                                 // 输入有效，退出循环
                                 server = res.servers[index];
                                 lastIndexInput = input;
-                                Console.WriteLine($"您选择的服务器为：{server.server_name}");
+                                _logger.LogInformation($"您选择的服务器为：{server.server_name}");
                                 break;
                             }
                             else
                             {
-                                Console.WriteLine("输入有误，请重新输入");
+                                _logger.LogInformation("输入有误，请重新输入");
                                 continue;
                             }
                         }
@@ -220,7 +225,7 @@ namespace SuiDao.Client.Models
                 }
                 else
                 {
-                    Console.WriteLine("当前服务器无可用隧道，请添加新的隧道或服务器。");
+                    _logger.LogInformation("当前服务器无可用隧道，请添加新的隧道或服务器。");
                     return NewKey();
                 }
 
@@ -228,7 +233,7 @@ namespace SuiDao.Client.Models
             }
             else
             {
-                Console.WriteLine(jobj["errorMsg"].ToString());
+                _logger.LogInformation(jobj["errorMsg"].ToString());
                 return NewKey();
             }
         }
