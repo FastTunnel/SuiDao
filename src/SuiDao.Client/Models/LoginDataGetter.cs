@@ -94,11 +94,12 @@ namespace SuiDao.Client.Models
             {
                 _logger.LogInformation("请输入登录密钥：");
                 key = Console.ReadLine();
+                // 当前控制台不可用
+                if (key == null)
+                    throw new Exception("登录参数异常，请在.key文件中填入登录key，或添加启动参数，如：SuiDao.Client key xxxxxxxxxxxxxxxxx");
 
-                if (string.IsNullOrEmpty(key))
-                {
+                if (key.Equals(string.Empty))
                     continue;
-                }
 
                 break;
             }
