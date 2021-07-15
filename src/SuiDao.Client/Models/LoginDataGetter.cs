@@ -81,7 +81,7 @@ namespace SuiDao.Client.Models
                     _logger.LogInformation($"{i + 1}：{keys[i]}");
                 }
 
-                return HandleNum(keys);
+                return HandleInputForServers(keys);
             }
 
             return NewKey();
@@ -120,21 +120,22 @@ namespace SuiDao.Client.Models
             }
         }
 
-        private LoginParam HandleNum(List<string> keys)
+        private LoginParam HandleInputForServers(List<string> keys)
         {
             _logger.LogInformation($"输入编号回车键继续：{sec}秒后将自动选择序号{lastKeyInput}");
             while (true)
             {
-                string input = lastKeyInput;
+                string input = null;
                 Task.Factory.StartNew(() =>
                 {
                     input = Console.ReadLine();
                 }).Wait(sec * 1000);
 
                 if (string.IsNullOrEmpty(input))
-                {
+                    input = lastKeyInput;
+
+                if (string.IsNullOrEmpty(input))
                     continue;
-                }
 
                 int index;
                 if (!int.TryParse(input, out index))
@@ -155,6 +156,7 @@ namespace SuiDao.Client.Models
                 }
                 else
                 {
+                    lastKeyInput = input;
                     return LogByKey(keys[index - 1], false);
                 }
             }
@@ -190,7 +192,7 @@ namespace SuiDao.Client.Models
                     }
                     else
                     {
-                        string input = lastIndexInput;
+                        string input = null;
                         _logger.LogInformation($"请选择其中一个服务器进行连接（输入序号，回车键确认）：{sec}秒后将自动选择 {res.servers[int.Parse(lastIndexInput)].server_name}");
 
                         for (int i = 0; i < res.servers.Length; i++)
@@ -204,7 +206,7 @@ namespace SuiDao.Client.Models
                             }).Wait(sec * 1000);
 
                             if (string.IsNullOrEmpty(input))
-                                input = "0";
+                                input = lastIndexInput;
 
                             int index;
                             if (int.TryParse(input, out index) && index <= res.servers.Length - 1 && index >= 0)
@@ -233,8 +235,8 @@ namespace SuiDao.Client.Models
             }
             else
             {
-                _logger.LogInformation(jobj["errorMsg"].ToString());
-                return NewKey();
+                _logger.LogError(jobj["errorMsg"]?.ToString());
+                throw new Exception(jobj["errorMsg"]?.ToString());
             }
         }
     }
