@@ -17,7 +17,7 @@
 各个操作系统如何实习开机自启某个程序不做介绍  
 启动程序时传参如下，可实现程序启动时自动使用执行的accesskey进行登录  
 
-`SuiDao.Client key accesskey`  
+`SuiDao.Client.exe --key 22dbff62637e428bb0b680ea7e7be07f`  
 
 accesskey替换你自己的key
 
