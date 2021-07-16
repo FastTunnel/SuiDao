@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SuiDao.Client.Models;
 using System;
+using System.Threading;
 
 namespace SuiDao.Client
 {
@@ -12,7 +13,15 @@ namespace SuiDao.Client
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message},程序将在5秒后关闭");
+                Thread.Sleep(5000);
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
