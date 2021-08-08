@@ -25,7 +25,8 @@ namespace SuiDao.Client
                     // -------------------FastTunnel EDN--------------------
 
                     // -------------------自定义实现覆盖----------------------
-                    services.AddSingleton<IFastTunnelClient, SuiDaoClient>();
+                    services.AddSingleton<IFastTunnelClient, SuiDaoClient>()
+                        .AddTransient<LoginDataGetter>();
                     // -----------------------------------------------------
                 })
                 .ConfigureLogging((HostBuilderContext context, ILoggingBuilder logging) =>

@@ -15,9 +15,10 @@ namespace SuiDao.Client.Models
 {
     public class SuiDaoClient : FastTunnelClient
     {
-        SuiDaoLoginData suiDaoLoginData;
+        LoginDataGetter suiDaoLoginData;
 
         public SuiDaoClient(
+          LoginDataGetter loginDataGetter,
           ILogger<FastTunnelClient> logger,
           SwapHandler newCustomerHandler,
           LogHandler logHandler,
@@ -25,7 +26,7 @@ namespace SuiDao.Client.Models
           IOptionsMonitor<DefaultClientConfig> configuration)
             : base(logger, newCustomerHandler, logHandler, configuration)
         {
-            this.suiDaoLoginData = new SuiDaoLoginData(_configuration);
+            this.suiDaoLoginData = loginDataGetter;
         }
 
         public override string GetLoginMsg()
