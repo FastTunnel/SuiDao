@@ -1,6 +1,6 @@
 ﻿using FastTunnel.Core.Extensions;
-using FastTunnel.Core.Global;
 using FastTunnel.Core.Handlers;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,20 +13,14 @@ namespace SuiDao.Server
         {
             CreateHostBuilder(args).Build().Run();
         }
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureServices((hostContext, services) =>
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    // -------------------FastTunnel START------------------
-                    services.AddFastTunnelServer();
-                    // -------------------FastTunnel EDN--------------------
-                    FastTunnelGlobal.AddCustomHandler<IConfigHandler, SuiDaoConfigHandler>(new SuiDaoConfigHandler());
-                })
-                .ConfigureLogging((HostBuilderContext context, ILoggingBuilder logging) =>
+                    webBuilder.UseStartup<Startup>();
+                }).ConfigureLogging((HostBuilderContext context, ILoggingBuilder logging) =>
                 {
                     logging.ClearProviders();
-                    //logging.SetMinimumLevel(LogLevel.Trace);
 
                     logging.AddLog4Net();
                     logging.SetMinimumLevel(LogLevel.Debug);

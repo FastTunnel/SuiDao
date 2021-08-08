@@ -1,4 +1,5 @@
-﻿using FastTunnel.Core.Client;
+﻿using FastTunnel.Core;
+using FastTunnel.Core.Client;
 using FastTunnel.Core.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,7 +25,7 @@ namespace SuiDao.Client
                     // -------------------FastTunnel EDN--------------------
 
                     // -------------------自定义实现覆盖----------------------
-                    services.AddSingleton<FastTunnelClient, SuiDaoTunnel>();
+                    services.AddSingleton<IFastTunnelClient, SuiDaoClient>();
                     // -----------------------------------------------------
                 })
                 .ConfigureLogging((HostBuilderContext context, ILoggingBuilder logging) =>

@@ -9,7 +9,7 @@ namespace SuiDao.Client
 {
     public static class HttpHelper
     {
-        public static Task<string> PostAsJson(string uri, string strContent)
+        public static async Task<string> PostAsJsonAsync(string uri, string strContent)
         {
             using (var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.None })
             using (var httpclient = new HttpClient(handler))
@@ -18,10 +18,10 @@ namespace SuiDao.Client
                 var content = new StringContent(strContent, Encoding.UTF8, "application/json");
 
                 // api1.suidao.io
-                var response = httpclient.PostAsync(uri, content).Result;
+                var response = httpclient.PostAsync(uri, content).GetAwaiter().GetResult();
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    return response.Content.ReadAsStringAsync();
+                    return await response.Content.ReadAsStringAsync();
                 }
                 else
                 {

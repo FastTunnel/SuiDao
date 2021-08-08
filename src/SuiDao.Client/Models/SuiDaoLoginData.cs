@@ -1,7 +1,6 @@
 ﻿using FastTunnel.Core.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using SuiDao.Core;
 using System;
 using System.Collections.Generic;
@@ -119,9 +118,9 @@ namespace SuiDao.Client.Models
 
         private LoginParam Run(string key, bool log)
         {
-            var res_str = HttpHelper.PostAsJson(SuiDaoApi.GetServerListByKey, $"{{ \"key\":\"{key}\"}}").Result;
-            var jobj = JObject.Parse(res_str);
-            if ((bool)jobj["success"] == true)
+            var res_str = HttpHelper.PostAsJsonAsync(SuiDaoApi.GetServerListByKey, $"{{ \"key\":\"{key}\"}}").Result;
+            var jobj = System.Text.Json.JsonSerializer.Deserialize<ApiResponse<SuiDaoServerConfig>>(res_str);
+            if (jobj.success)
             {
                 // 记录登录记录
                 if (log)
@@ -130,7 +129,7 @@ namespace SuiDao.Client.Models
                 }
 
                 SuiDaoServerInfo server;
-                var res = jobj["data"].ToObject<SuiDaoServerConfig>();
+                var res = jobj.data;
                 if (res.servers != null && res.servers.Count() > 0)
                 {
                     // 选择其中一个服务器继续
@@ -183,7 +182,7 @@ namespace SuiDao.Client.Models
             }
             else
             {
-                Console.WriteLine(jobj["errorMsg"].ToString());
+                Console.WriteLine(jobj.errorMsg);
                 return NewKey();
             }
         }
