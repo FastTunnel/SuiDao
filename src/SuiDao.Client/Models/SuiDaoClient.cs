@@ -10,6 +10,7 @@ using FastTunnel.Core.Sockets;
 using FastTunnel.Core.Config;
 using Microsoft.Extensions.Options;
 using FastTunnel.Core.Extensions;
+using System.Threading;
 
 namespace SuiDao.Client.Models
 {
@@ -29,11 +30,12 @@ namespace SuiDao.Client.Models
             this.suiDaoLoginData = loginDataGetter;
         }
 
-        public override string GetLoginMsg()
+        public override string GetLoginMsg(CancellationToken cancellationToken)
         {
-            LoginParam loginParam = suiDaoLoginData.GetLoginData();
+            LoginParam loginParam = suiDaoLoginData.GetLoginData(cancellationToken);
             Server = new SuiDaoServer { ServerAddr = loginParam.server.ip, ServerPort = loginParam.server.bind_port };
-            return new LogInByKeyMassage { key = loginParam.key, server_id = loginParam.server.server_id }.ToJson(); ;
+            var version = typeof(FastTunnelClient).Assembly.GetName().Version.ToString();
+            return new LogInByKeyMassage { key = loginParam.key, client_version = version, server_id = loginParam.server.server_id }.ToJson(); ;
         }
     }
 }

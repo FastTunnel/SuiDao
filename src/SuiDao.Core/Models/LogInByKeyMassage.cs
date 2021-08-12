@@ -10,5 +10,7 @@ namespace SuiDao.Client.Models
         public string key { get; set; }
 
         public long server_id { get; set; }
+
+        public string client_version { get; set; }
     }
 }

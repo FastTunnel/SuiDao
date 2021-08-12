@@ -1,4 +1,6 @@
-﻿using FastTunnel.Core.Models;
+﻿using FastTunnel.Core.Client;
+using FastTunnel.Core.Extensions;
+using FastTunnel.Core.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SuiDao.Core;
@@ -36,25 +38,25 @@ namespace SuiDao.Client.Models
         string lastIndexInput = "0";
         int sec = 10;
 
-        public LoginParam GetLoginData()
+        public LoginParam GetLoginData(CancellationToken cancellationToken)
         {
             // 控制台传参直接登录
             if (configuration["key"] != null)
             {
                 _logger.LogDebug($"传参快速登录 key={configuration["key"]}");
-                return LogByKeyAsync(configuration["key"], true);
+                return LogByKeyAsync(configuration["key"], true, cancellationToken);
             }
 
-            return defaultLogic();
+            return defaultLogic(cancellationToken);
         }
 
-        private LoginParam defaultLogic()
+        private LoginParam defaultLogic(CancellationToken cancellationToken)
         {
             _logger.LogDebug($"默认方式登录开始");
             var keyFile = Path.Combine(AppContext.BaseDirectory, KeyLogName);
             if (!File.Exists(keyFile))
             {
-                return NewKey();
+                return NewKey(cancellationToken);
             }
 
             List<string> keys = new List<string>();
@@ -80,13 +82,13 @@ namespace SuiDao.Client.Models
                     _logger.LogInformation($"{i + 1}：{keys[i]}");
                 }
 
-                return HandleInputForServers(keys);
+                return HandleInputForServers(keys, cancellationToken);
             }
 
-            return NewKey();
+            return NewKey(cancellationToken);
         }
 
-        private LoginParam NewKey()
+        private LoginParam NewKey(CancellationToken cancellationToken)
         {
             string key;
             while (true)
@@ -103,7 +105,7 @@ namespace SuiDao.Client.Models
                 break;
             }
 
-            return LogByKeyAsync(key, true);
+            return LogByKeyAsync(key, true, cancellationToken);
         }
 
         public static void AppendTextToFile(string filename, string inputStr)
@@ -120,7 +122,7 @@ namespace SuiDao.Client.Models
             }
         }
 
-        private LoginParam HandleInputForServers(List<string> keys)
+        private LoginParam HandleInputForServers(List<string> keys, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"输入编号回车键继续：{sec}秒后将自动选择序号{lastKeyInput}");
             while (true)
@@ -129,7 +131,7 @@ namespace SuiDao.Client.Models
                 Task.Factory.StartNew(() =>
                 {
                     input = Console.ReadLine();
-                }).Wait(sec * 1000);
+                }).Wait(sec * 1000, cancellationToken);
 
                 if (string.IsNullOrEmpty(input))
                     input = lastKeyInput;
@@ -152,12 +154,12 @@ namespace SuiDao.Client.Models
 
                 if (index == 0)
                 {
-                    return NewKey();
+                    return NewKey(cancellationToken);
                 }
                 else
                 {
                     lastKeyInput = input;
-                    return LogByKeyAsync(keys[index - 1], false);
+                    return LogByKeyAsync(keys[index - 1], false, cancellationToken);
                 }
             }
         }
@@ -168,10 +170,13 @@ namespace SuiDao.Client.Models
         /// <param name="key"></param>
         /// <param name="logger"></param>
         /// <param name="log">是否记录登录记录</param>
-        private LoginParam LogByKeyAsync(string key, bool log)
+        private LoginParam LogByKeyAsync(string key, bool log, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"正在使用Key={key}登录");
-            var res_str = HttpHelper.PostAsJsonAsync(SuiDaoApi.GetServerListByKey, $"{{ \"key\":\"{key}\"}}").GetAwaiter().GetResult();
+            var version = typeof(FastTunnelClient).Assembly.GetName().Version.ToString();
+            var res_str = HttpHelper.PostAsJsonAsync(SuiDaoApi.GetServerListByKey, new { key = key, version }.ToJson()).
+                GetAwaiter().GetResult();
+
             var jobj = System.Text.Json.JsonSerializer.Deserialize<ApiResponse<SuiDaoServerConfig>>(res_str);
             if (jobj.success)
             {
@@ -203,7 +208,7 @@ namespace SuiDao.Client.Models
                             Task.Factory.StartNew(() =>
                             {
                                 input = Console.ReadLine();
-                            }).Wait(sec * 1000);
+                            }).Wait(sec * 1000, cancellationToken);
 
                             if (string.IsNullOrEmpty(input))
                                 input = lastIndexInput;
@@ -228,7 +233,7 @@ namespace SuiDao.Client.Models
                 else
                 {
                     _logger.LogInformation("当前服务器无可用隧道，请添加新的隧道或服务器。");
-                    return NewKey();
+                    return NewKey(cancellationToken);
                 }
 
                 return new LoginParam { key = key, server = server };

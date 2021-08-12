@@ -13,6 +13,8 @@ using System.Net.WebSockets;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Yarp.ReverseProxy.Configuration;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using FastTunnel.Core.Extensions;
 
 namespace SuiDao.Server.Handlers
 {
@@ -25,8 +27,16 @@ namespace SuiDao.Server.Handlers
 
         public override async Task<bool> HandlerMsg(FastTunnelServer server, WebSocket client, string content)
         {
+            var version = typeof(LoginHandler).Assembly.GetName().Version;
+            var versionLow = $"当前客户端版本低于服务端版本{version}，请下载最新的客户端：https://github.com/FastTunnel/SuiDao/releases";
             var logMsg = System.Text.Json.JsonSerializer.Deserialize<LogInByKeyMassage>(content);
-            var res = HttpHelper.PostAsJsonAsync(SuiDaoApi.GetTunnelListByKeyAndServerId, $"{{ \"key\":\"{logMsg.key}\",\"server_id\":{logMsg.server_id}}}").Result;
+
+            if (string.IsNullOrEmpty(logMsg.client_version) || Version.Parse(logMsg.client_version).Major < version.Major)
+            {
+                throw new Exception(versionLow);
+            }
+
+            var res = HttpHelper.PostAsJsonAsync(SuiDaoApi.GetTunnelListByKeyAndServerId, logMsg.ToJson()).Result;
 
             var jobj = System.Text.Json.JsonSerializer.Deserialize<ApiResponse<Tunnel[]>>(res);
             if (jobj.success)
@@ -57,7 +67,7 @@ namespace SuiDao.Server.Handlers
                     }
                 }
 
-                await HandleLoginAsync(server,client, new LogInMassage
+                await HandleLoginAsync(server, client, new LogInMassage
                 {
                     Forwards = SSH,
                     Webs = Webs,
