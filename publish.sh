@@ -9,12 +9,12 @@ for project in ${projects[*]}; do
     for plate in ${plates[*]}; do
         echo "plate=${plate}"
         echo src/$project/$project.csproj
-        dotnet publish src/$project/$project.csproj -o=publish/$project.$plate -c=release -r=$plate -p:PublishSingleFile=true --nologo
+        dotnet publish src/$project/$project.csproj -o=publish/$project.$plate -c=release --nologo || exit 1
         # cp src/$project/appsettings.json publish/$project.$plate
         echo
         echo "=========开始打包 ========="
         echo
-        cd publish && tar -zcvf $project.$plate.tar.gz $project.$plate
+        cd publish && tar -zcvf $project.$plate.tar.gz $project.$plate || exit 1
         cd ../
         # rm -rf publish/$project.$plate
     done

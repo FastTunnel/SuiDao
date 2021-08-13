@@ -30,8 +30,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FastTunnel\FastTunnel.Core\FastTunnel.Core.csproj" />
     <ProjectReference Include="..\SuiDao.Core\SuiDao.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="uninstall.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="install.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

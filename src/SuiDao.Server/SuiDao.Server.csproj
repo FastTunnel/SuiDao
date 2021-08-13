@@ -22,7 +22,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FastTunnel\FastTunnel.Core\FastTunnel.Core.csproj" />
     <ProjectReference Include="..\SuiDao.Core\SuiDao.Core.csproj" />
   </ItemGroup>
 
