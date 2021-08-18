@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuiDao.Server", "SuiDao.Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuiDao.Core", "SuiDao.Core\SuiDao.Core.csproj", "{791A04D6-409E-4E19-AE36-DCE056BEB9F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastTunnel.Core", "..\..\FastTunnel_v2\FastTunnel.Core\FastTunnel.Core.csproj", "{B11DA78F-838C-49BA-95C4-5B98CB921328}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastTunnel.Core", "..\..\FastTunnel\FastTunnel.Core\FastTunnel.Core.csproj", "{B11DA78F-838C-49BA-95C4-5B98CB921328}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

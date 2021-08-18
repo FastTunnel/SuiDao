@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using SuiDao.Server.Handlers;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,12 @@ namespace SuiDao.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v2", new OpenApiInfo { Title = "SuiDao.Api", Version = "v2" });
+            });
+
             // -------------------FastTunnel START------------------
             services.AddFastTunnelServer(Configuration.GetSection("ServerSettings"));
             // -------------------FastTunnel END--------------------
@@ -37,6 +44,9 @@ namespace SuiDao.Server
         {
             if (env.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v2/swagger.json", "SuiDao.Api"));
             }
 
             // -------------------FastTunnel START------------------
@@ -48,7 +58,7 @@ namespace SuiDao.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapReverseProxy();
-                //endpoints.MapControllers();
+                endpoints.MapControllers();
             });
         }
     }
