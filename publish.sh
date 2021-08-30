@@ -1,7 +1,8 @@
 #!/bin/bash
+## 不含运行时，可大大减少软件包的大小，需要运行的平台安装对应的.net运行时环境
 rm -rf publish/*
 projects=("SuiDao.Client") # "SuiDao.Server"
-plates=("win-x64" "win-arm" "osx-x64" "linux-arm" "linux-x64")
+plates=("win-x64" "win-x86" "win-arm" "osx-x64" "linux-arm" "linux-x64")
 for project in ${projects[*]}; do
     echo
     echo "=========开始发布：${project} ========="
