@@ -20,5 +20,7 @@ namespace SuiDao.Server
         public int local_port { get; set; }
 
         public int remote_port { get; set; }
+
+        public string custom_domain { get; set; }
     }
 }

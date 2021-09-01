@@ -53,7 +53,8 @@ namespace SuiDao.Server.Handlers
                         {
                             LocalIp = tunnel.local_ip,
                             LocalPort = tunnel.local_port,
-                            SubDomain = tunnel.sub_domain
+                            SubDomain = tunnel.sub_domain,
+                            WWW = string.IsNullOrEmpty(tunnel.custom_domain) ? null : new string[] { tunnel.custom_domain }
                         });
                     }
                     else if (tunnel.app_type == 2)

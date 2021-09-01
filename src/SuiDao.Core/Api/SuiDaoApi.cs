@@ -14,6 +14,6 @@ namespace SuiDao.Core
         /// <summary>
         /// 根据Key和ServerId获取所有可用隧道列表
         /// </summary>
-        public static readonly string GetTunnelListByKeyAndServerId = "https://api1.suidao.io/api/Client/GetTunnelByKey";
+        public static readonly string GetTunnelListByKeyAndServerId = "https://api1.suidao.io/api/Tunnel/GetTunnelByKey";
     }
 }
