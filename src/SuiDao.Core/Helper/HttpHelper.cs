@@ -11,7 +11,12 @@ namespace SuiDao.Client
     {
         public static async Task<string> PostAsJsonAsync(string uri, string strContent)
         {
-            using (var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.None })
+            using (var handler = new HttpClientHandler()
+            {
+                ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true,
+                AutomaticDecompression = DecompressionMethods.None
+            })
+
             using (var httpclient = new HttpClient(handler))
             {
                 httpclient.BaseAddress = new Uri(uri);

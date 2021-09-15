@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuiDao.Core", "SuiDao.Core\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastTunnel.Core", "..\..\FastTunnel\FastTunnel.Core\FastTunnel.Core.csproj", "{B11DA78F-838C-49BA-95C4-5B98CB921328}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastTunnel.Api", "..\..\FastTunnel\FastTunnel.Api\FastTunnel.Api.csproj", "{58FC0AA8-193B-4904-BF7A-2F628A21C97B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{B11DA78F-838C-49BA-95C4-5B98CB921328}.Release|x64.Build.0 = Release|Any CPU
 		{B11DA78F-838C-49BA-95C4-5B98CB921328}.Release|x86.ActiveCfg = Release|Any CPU
 		{B11DA78F-838C-49BA-95C4-5B98CB921328}.Release|x86.Build.0 = Release|Any CPU
+		{58FC0AA8-193B-4904-BF7A-2F628A21C97B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58FC0AA8-193B-4904-BF7A-2F628A21C97B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58FC0AA8-193B-4904-BF7A-2F628A21C97B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{58FC0AA8-193B-4904-BF7A-2F628A21C97B}.Debug|x64.Build.0 = Debug|Any CPU
+		{58FC0AA8-193B-4904-BF7A-2F628A21C97B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{58FC0AA8-193B-4904-BF7A-2F628A21C97B}.Debug|x86.Build.0 = Debug|Any CPU
+		{58FC0AA8-193B-4904-BF7A-2F628A21C97B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58FC0AA8-193B-4904-BF7A-2F628A21C97B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58FC0AA8-193B-4904-BF7A-2F628A21C97B}.Release|x64.ActiveCfg = Release|Any CPU
+		{58FC0AA8-193B-4904-BF7A-2F628A21C97B}.Release|x64.Build.0 = Release|Any CPU
+		{58FC0AA8-193B-4904-BF7A-2F628A21C97B}.Release|x86.ActiveCfg = Release|Any CPU
+		{58FC0AA8-193B-4904-BF7A-2F628A21C97B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

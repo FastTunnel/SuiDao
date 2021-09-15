@@ -1,15 +1,22 @@
 ﻿using FastTunnel.Core;
+using FastTunnel.Core.Config;
+using FastTunnel.Core.Extensions;
 using FastTunnel.Core.Handlers.Server;
+using FastTunnel.Server.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SuiDao.Server.Handlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SuiDao.Server
@@ -26,6 +33,43 @@ namespace SuiDao.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+               .AddJwtBearer(options =>
+               {
+                   var serverOptions = Configuration.GetSection("FastTunnel").Get<DefaultServerConfig>();
+
+                   options.TokenValidationParameters = new TokenValidationParameters
+                   {
+                       ValidateIssuer = false,
+                       ValidateAudience = false,
+                       ValidateLifetime = true,
+                       ClockSkew = TimeSpan.FromSeconds(serverOptions.Api.JWT.ClockSkew),
+                       ValidateIssuerSigningKey = true,
+                       ValidAudience = serverOptions.Api.JWT.ValidAudience,
+                       ValidIssuer = serverOptions.Api.JWT.ValidIssuer,
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(serverOptions.Api.JWT.IssuerSigningKey))
+                   };
+
+                   options.Events = new JwtBearerEvents
+                   {
+                       OnChallenge = async context =>
+                       {
+                           context.HandleResponse();
+
+                           context.Response.ContentType = "application/json;charset=utf-8";
+                           context.Response.StatusCode = StatusCodes.Status200OK;
+
+                           await context.Response.WriteAsync(new ApiResponse
+                           {
+                               errorCode = ErrorCodeEnum.AuthError,
+                               errorMessage = context.Error ?? "Token is Required"
+                           }.ToJson());
+                       },
+                   };
+               });
+
+            services.AddAuthorization();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -33,7 +77,7 @@ namespace SuiDao.Server
             });
 
             // -------------------FastTunnel START------------------
-            services.AddFastTunnelServer(Configuration.GetSection("ServerSettings"));
+            services.AddFastTunnelServer(Configuration.GetSection("FastTunnel"));
             // -------------------FastTunnel END--------------------
 
             services.AddSingleton<ILoginHandler, SuiDaoLoginHandler>();
@@ -54,6 +98,12 @@ namespace SuiDao.Server
             // -------------------FastTunnel END--------------------
 
             app.UseRouting();
+
+            // --------------------- Custom UI ----------------
+            app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            // --------------------- Custom UI ----------------
 
             app.UseEndpoints(endpoints =>
             {
