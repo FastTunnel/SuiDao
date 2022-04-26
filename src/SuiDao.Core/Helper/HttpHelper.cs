@@ -11,6 +11,12 @@ namespace SuiDao.Client
     {
         public static async Task<string> PostAsJsonAsync(string uri, string strContent)
         {
+            // 解决某些环境问题导致默认的协议版本较低无法建立ssl/tls连接
+            if ((ServicePointManager.SecurityProtocol & SecurityProtocolType.Tls12) != SecurityProtocolType.Tls12)
+            {
+                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+            };
+
             using (var handler = new HttpClientHandler()
             {
                 ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true,
