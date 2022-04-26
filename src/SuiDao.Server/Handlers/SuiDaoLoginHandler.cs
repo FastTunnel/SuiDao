@@ -25,7 +25,7 @@ namespace SuiDao.Server.Handlers
         {
         }
 
-        public override async Task<bool> HandlerMsg(FastTunnelServer server, WebSocket client, string content)
+        public override async Task<bool> HandlerMsg(FastTunnelServer server, TunnelClient client, string content)
         {
             var version = typeof(LoginHandler).Assembly.GetName().Version;
             var versionLow = $"当前客户端版本低于服务端版本{version}，请下载最新的客户端：https://github.com/FastTunnel/SuiDao/releases";
