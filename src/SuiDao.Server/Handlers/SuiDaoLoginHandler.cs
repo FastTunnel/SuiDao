@@ -15,6 +15,7 @@ using System.Xml.Linq;
 using Yarp.ReverseProxy.Configuration;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using FastTunnel.Core.Extensions;
+using FastTunnel.Core.Models.Massage;
 
 namespace SuiDao.Server.Handlers
 {

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FastTunnel.Core" Version="2.1.0" />
+    <ProjectReference Include="..\..\..\FastTunnel\FastTunnel.Core\FastTunnel.Core.csproj" />
   </ItemGroup>
 
 </Project>
