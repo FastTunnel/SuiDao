@@ -4,6 +4,7 @@ using FastTunnel.Core.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using SuiDao.Client.Models;
 using System;
 
@@ -18,6 +19,13 @@ namespace SuiDao.Client
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog((context, services, loggerConfiguration) =>
+                {
+                    loggerConfiguration.ReadFrom.Configuration(context.Configuration)
+                        .ReadFrom.Services(services)
+                        .Enrich.FromLogContext()
+                        .WriteTo.Console();
+                })
                 .ConfigureServices((hostContext, services) =>
                 {
                     // -------------------FastTunnel START------------------
@@ -28,12 +36,6 @@ namespace SuiDao.Client
                     services.AddSingleton<IFastTunnelClient, SuiDaoClient>()
                         .AddTransient<LoginDataGetter>();
                     // -----------------------------------------------------
-                })
-                .ConfigureLogging((HostBuilderContext context, ILoggingBuilder logging) =>
-                {
-                    logging.ClearProviders();
-                    logging.AddLog4Net();
-                    logging.SetMinimumLevel(LogLevel.Debug);
                 });
     }
 }
