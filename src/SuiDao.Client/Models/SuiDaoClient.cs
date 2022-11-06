@@ -30,7 +30,7 @@ namespace SuiDao.Client.Models
             this.suiDaoLoginData = loginDataGetter;
         }
 
-        public override string GetLoginMsg(CancellationToken cancellationToken)
+        protected override string GetLoginMsg(CancellationToken cancellationToken)
         {
             LoginParam loginParam = suiDaoLoginData.GetLoginData(cancellationToken);
             Server = new SuiDaoServer { ServerAddr = loginParam.server.ip, ServerPort = loginParam.server.bind_port };

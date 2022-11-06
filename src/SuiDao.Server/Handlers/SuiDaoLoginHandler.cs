@@ -15,6 +15,8 @@ using System.Xml.Linq;
 using Yarp.ReverseProxy.Configuration;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using FastTunnel.Core.Extensions;
+using System.Threading;
+using FastTunnel.Core.Models.Massage;
 
 namespace SuiDao.Server.Handlers
 {
@@ -25,8 +27,13 @@ namespace SuiDao.Server.Handlers
         {
         }
 
-        public override async Task<bool> HandlerMsg(FastTunnelServer server, TunnelClient client, string content)
+        public override async Task<bool> HandlerMsg(FastTunnelServer server, TunnelClient client, string content, CancellationToken cancellationToken)
         {
+            //    return base.HandlerMsg(fastTunnelServer, tunnelClient, lineCmd, cancellationToken);
+            //}
+
+            //public  async Task<bool> HandlerMsg1(FastTunnelServer server, TunnelClient client, string content)
+            //{
             var version = typeof(LoginHandler).Assembly.GetName().Version;
             var versionLow = $"当前客户端版本低于服务端版本{version}，请下载最新的客户端：https://github.com/FastTunnel/SuiDao/releases";
             var logMsg = System.Text.Json.JsonSerializer.Deserialize<LogInByKeyMassage>(content);
@@ -72,7 +79,7 @@ namespace SuiDao.Server.Handlers
                 {
                     Forwards = SSH,
                     Webs = Webs,
-                });
+                }, cancellationToken);
 
                 return NeedRecive;
             }
