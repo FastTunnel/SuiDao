@@ -1,0 +1,3 @@
+[submodule "src/FastTunnel"]
+	path = src/FastTunnel
+	url = ../../FastTunnel/FastTunnel.git

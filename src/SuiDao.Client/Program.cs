@@ -5,8 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using SuiDao.Client.Extensions;
 using SuiDao.Client.Models;
-using System;
 
 namespace SuiDao.Client
 {

@@ -30,6 +30,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\FastTunnel\FastTunnel.Core.Client\FastTunnel.Core.Client.csproj" />
 		<ProjectReference Include="..\SuiDao.Core\SuiDao.Core.csproj" />
 	</ItemGroup>
 

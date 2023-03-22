@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FastTunnel\FastTunnel.Core\FastTunnel.Core.csproj" />
+    <ProjectReference Include="..\FastTunnel\FastTunnel.Core\FastTunnel.Core.csproj" />
   </ItemGroup>
 
 </Project>

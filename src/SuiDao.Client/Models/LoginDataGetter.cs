@@ -1,8 +1,7 @@
 ﻿using FastTunnel.Core.Client;
-using FastTunnel.Core.Extensions;
-using FastTunnel.Core.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using SuiDao.Client.Extensions;
 using SuiDao.Core;
 using System;
 using System.Collections.Generic;

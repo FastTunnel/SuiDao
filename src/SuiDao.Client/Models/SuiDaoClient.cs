@@ -3,14 +3,10 @@ using FastTunnel.Core.Client;
 using FastTunnel.Core.Handlers.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Net.Sockets;
-using FastTunnel.Core.Models;
-using FastTunnel.Core.Sockets;
 using FastTunnel.Core.Config;
 using Microsoft.Extensions.Options;
-using FastTunnel.Core.Extensions;
 using System.Threading;
+using SuiDao.Client.Extensions;
 
 namespace SuiDao.Client.Models
 {
