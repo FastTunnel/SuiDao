@@ -27,8 +27,14 @@ accesskey替换你自己的key
 移步至 [FastTunnel](https://github.com/SpringHgui/FastTunnel) 使用FastTunnel项目直接搭建。
 
 ## 源码
+整个`suidao.io`项目由以下几个部分组成  
+1. suidao客户端服务端：[SuiDao](https://github.com/FastTunnel/SuiDao)   
+2. 前端Web：[suidao.vue](https://github.com/SpringHgui/suidao.vue)    
+3. 业务api源码：Tunnel.Api，这部分未开源，不差钱的可以赞助作者获取(赞助不低于￥1500才可获取该源码)
 
-前端Web源码：[suidao.vue](https://github.com/SpringHgui/suidao.vue)  
-业务api源码：尚未开放 
+## 开源不易，请多支持
+如果您是为了学习或个人简单使用，`FastTunnel`已经完全满足你的需要。  
+如果你是要进行二次开发，甚至二次开发后进行盈利，即使不开放`Tunnel.Api`项目，你绝对也能搞得出来。  
+如果本项目对您帮助不小，您不妨赞助作者。  
 
 ## Welcome PR
