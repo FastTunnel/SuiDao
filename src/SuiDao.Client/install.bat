@@ -5,7 +5,7 @@ color 0e
 @echo ==================================
 @echo Start Install SuiDao.Client
 
-sc create SuiDao.Client binPath=%~dp0\SuiDao.Client.exe start= auto 
+sc create SuiDao.Client binPath="%~dp0SuiDao.Client.exe" start=auto 
 sc description SuiDao.Client "FastTunnel-开源内网穿透服务，仓库地址：https://github.com/SpringHgui/FastTunnel"
 Net Start SuiDao.Client
 pause
