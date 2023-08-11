@@ -21,7 +21,7 @@
 		<PackageReference Include="FastTunnel.Api" Version="1.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.3.1" />
-		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.3.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
 		<PackageReference Include="Serilog.AspNetCore" Version="6.0.0-dev-00265" />
 	</ItemGroup>
 
